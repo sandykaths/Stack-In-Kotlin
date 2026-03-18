@@ -1,6 +1,6 @@
 package co.edu.uptc.structures;
 
-class Stack <T> (var top:Node<T>? = null){
+class Stack <T> (private var top:Node<T>? = null){
 
     fun push(element:T): Boolean{
         val newNode = Node(element)
@@ -10,18 +10,31 @@ class Stack <T> (var top:Node<T>? = null){
             newNode.next = top
             top = newNode
         }
-        return true;
+        return true
     }
 
-    fun peek():T{
-
+    fun peek():T?{
+        if(isEmpty()) return null
+        return top!!.value
     }
 
-    fun pull():T{
-
+    fun pop():T?{
+        val currentTop = top
+        if(currentTop == null) return null
+        val aux:T = currentTop.value
+        top = currentTop.next
+        return aux
     }
 
-    fun isEmty():Boolean{
-        
+    fun isEmpty(): Boolean = top == null
+
+    override fun toString(): String {
+        var string:String = ""
+        var current = top
+        while (current != null) {
+        string += current.value.toString() + (if (current.next != null) "\n" else "")
+        current = current.next
+        }
+        return string;
     }
 }
